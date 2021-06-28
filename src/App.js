@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import { Button } from "antd";
+import { observer } from "mobx-react-lite";
+import React from "react";
+import { useStores } from "./hooks/use-stores";
+import { useHistory } from "react-router-dom";
 
-function App() {
+const _App = () => {
+  const stores = useStores();
+  const counter = stores.counter;
+  const navigate = useHistory().push;
   return (
-    <div className="App">
+    <div className="App" style={{ textAlign: "center", padding: "3rem" }}>
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+        <h1>Site de testes do Silvério e Raphael</h1>
+        <Button
+          type="primary"
+          danger
+          onClick={() => {
+            counter.setCounter(counter.counter + 1);
+          }}
         >
-          Learn React
-        </a>
+          Clique
+        </Button>
+        <h1>Contador: {counter.counter}</h1>
+        <Button
+          type="primary"
+          danger
+          onClick={() => {
+            navigate("/about");
+          }}
+        >
+          Ir para About
+        </Button>
       </header>
     </div>
   );
-}
+};
 
-export default App;
+export const App = observer(_App);
